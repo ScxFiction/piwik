@@ -46,7 +46,7 @@ use Piwik\Tracker\Cache;
 use Piwik\Translate;
 use Piwik\Url;
 use PHPUnit_Framework_Assert;
-use Piwik\Tests\Framework\TestingEnvironment;
+use Piwik\Tests\Framework\TestingEnvironmentVariables;
 use PiwikTracker;
 use Piwik_LocalTracker;
 use Piwik\Updater;
@@ -276,7 +276,7 @@ class Fixture extends \PHPUnit_Framework_Assert
     public function getTestEnvironment()
     {
         if ($this->testEnvironment === null) {
-            $this->testEnvironment = new TestingEnvironment();
+            $this->testEnvironment = new TestingEnvironmentVariables();
             $this->testEnvironment->delete();
 
             if (getenv('PIWIK_USE_XHPROF') == 1) {
@@ -337,7 +337,7 @@ class Fixture extends \PHPUnit_Framework_Assert
     public static function loadAllPlugins($testEnvironment = null, $testCaseClass = false, $extraPluginsToLoad = array())
     {
         if (empty($testEnvironment)) {
-            $testEnvironment = new TestingEnvironment();
+            $testEnvironment = new TestingEnvironmentVariables();
         }
 
         DbHelper::createTables();
