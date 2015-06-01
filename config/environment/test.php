@@ -20,7 +20,7 @@ return array(
 
     // Disable loading core translations
     'Piwik\Translation\Translator' => DI\decorate(function ($previous, ContainerInterface $c) {
-        $testingEnvironment = $c->get('Piwik\Tests\Framework\TestingEnvironment');
+        $testingEnvironment = $c->get('Piwik\Tests\Framework\TestingEnvironmentVariables');
         if (!$testingEnvironment->loadRealTranslations) {
             return new \Piwik\Translation\Translator($c->get('Piwik\Translation\Loader\LoaderInterface'), $directories = array());
         } else {
@@ -29,7 +29,7 @@ return array(
     }),
 
     'Piwik\Config' => DI\decorate(function ($previous, ContainerInterface $c) {
-        $testingEnvironment = $c->get('Piwik\Tests\Framework\TestingEnvironment');
+        $testingEnvironment = $c->get('Piwik\Tests\Framework\TestingEnvironmentVariables');
         if (!$testingEnvironment->dontUseTestConfig) {
             $settingsProvider = $c->get('Piwik\Application\Kernel\GlobalSettingsProvider');
             return new TestConfig($settingsProvider, $testingEnvironment, $allowSave = false, $doSetTestEnvironment = true);
