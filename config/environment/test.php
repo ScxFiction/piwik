@@ -4,8 +4,8 @@ use Interop\Container\ContainerInterface;
 use Piwik\Common;
 use Piwik\DbHelper;
 use Piwik\Option;
+use Piwik\Tests\Framework\Mock\FakeAccess;
 use Piwik\Tests\Framework\Mock\TestConfig;
-use Piwik\Tests\Framework\Piwik_MockAccess;
 use Piwik\Tests\Framework\TestingEnvironmentVariables;
 
 return array(
@@ -40,10 +40,12 @@ return array(
 
     'observers.global' => DI\add(array(
 
-        array('Access.createAccessSingleton', function ($access) {
+        array('Access.createAccessSingleton', function () {
             $testingEnvironment = new TestingEnvironmentVariables();
             if ($testingEnvironment->testUseMockAuth) {
-                $access = new Piwik_MockAccess($access);
+                $access = new FakeAccess();
+                FakeAccess::$superUser = true;
+                FakeAccess::$superUserLogin = 'superUserLogin';
                 \Piwik\Access::setSingletonInstance($access);
             }
         }),
