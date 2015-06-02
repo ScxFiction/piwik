@@ -626,7 +626,9 @@ abstract class SystemTestCase extends PHPUnit_Framework_TestCase
      */
     public static function provideContainerConfigBeforeClass()
     {
-        return array();
+        return array(
+            'test.vars.loadRealTranslations' => true // needed for API system tests
+        );
     }
 }
 

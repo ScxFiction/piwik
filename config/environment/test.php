@@ -20,8 +20,8 @@ return array(
 
     // Disable loading core translations
     'Piwik\Translation\Translator' => DI\decorate(function ($previous, ContainerInterface $c) {
-        $testingEnvironment = $c->get('Piwik\Tests\Framework\TestingEnvironmentVariables');
-        if (!$testingEnvironment->loadRealTranslations) {
+        $loadRealTranslations = $c->get('test.vars.loadRealTranslations');
+        if (!$loadRealTranslations) {
             return new \Piwik\Translation\Translator($c->get('Piwik\Translation\Loader\LoaderInterface'), $directories = array());
         } else {
             return $previous;
@@ -30,7 +30,9 @@ return array(
 
     'Piwik\Config' => DI\decorate(function ($previous, ContainerInterface $c) {
         $testingEnvironment = $c->get('Piwik\Tests\Framework\TestingEnvironmentVariables');
-        if (!$testingEnvironment->dontUseTestConfig) {
+
+        $dontUseTestConfig = $c->get('test.vars.dontUseTestConfig');
+        if (!$dontUseTestConfig) {
             $settingsProvider = $c->get('Piwik\Application\Kernel\GlobalSettingsProvider');
             return new TestConfig($settingsProvider, $testingEnvironment, $allowSave = false, $doSetTestEnvironment = true);
         } else {
@@ -41,8 +43,8 @@ return array(
     'observers.global' => DI\add(array(
 
         array('Access.createAccessSingleton', function () {
-            $testingEnvironment = new TestingEnvironmentVariables();
-            if ($testingEnvironment->testUseMockAuth) {
+            $testUseMockAuth = \Piwik\Container\StaticContainer::get('test.vars.testUseMockAuth');
+            if ($testUseMockAuth) {
                 $access = new FakeAccess();
                 FakeAccess::$superUser = true;
                 FakeAccess::$superUserLogin = 'superUserLogin';
@@ -51,15 +53,15 @@ return array(
         }),
 
         array('AssetManager.getStylesheetFiles', function (&$stylesheets) {
-            $testingEnvironment = new TestingEnvironmentVariables();
-            if ($testingEnvironment->useOverrideCss) {
+            $useOverrideCss = \Piwik\Container\StaticContainer::get('test.vars.useOverrideCss');
+            if ($useOverrideCss) {
                 $stylesheets[] = 'tests/resources/screenshot-override/override.css';
             }
         }),
 
         array('AssetManager.getJavaScriptFiles', function (&$jsFiles) {
-            $testingEnvironment = new TestingEnvironmentVariables();
-            if ($testingEnvironment->useOverrideJs) {
+            $useOverrideJs = \Piwik\Container\StaticContainer::get('test.vars.useOverrideJs');
+            if ($useOverrideJs) {
                 $jsFiles[] = 'tests/resources/screenshot-override/override.js';
             }
         }),
