@@ -64,6 +64,13 @@ then
             phantomjs ../lib/screenshot-testing/run-tests.js --assume-artifacts --persist-fixture-data --screenshot-repo=$TRAVIS_REPO_SLUG --plugin=$PLUGIN_NAME
         else
             phantomjs ../lib/screenshot-testing/run-tests.js --store-in-ui-tests-repo --persist-fixture-data --assume-artifacts --core
+
+            FILES=/tmp/*.dmp
+            for file in $FILES
+            do
+              echo "checking $file"
+              cat $file
+            done
         fi
     elif [ "$TEST_SUITE" = "AllTests" ]
     then
