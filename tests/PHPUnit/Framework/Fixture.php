@@ -87,7 +87,12 @@ class Fixture extends \PHPUnit_Framework_Assert
 
     public $dropDatabaseInSetUp = true;
     public $dropDatabaseInTearDown = true;
+
+    /**
+     * @deprecated
+     */
     public $loadTranslations = true;
+
     public $createSuperUser = true;
     public $removeExistingSuperUser = true;
     public $overwriteExisting = true;
@@ -229,12 +234,6 @@ class Fixture extends \PHPUnit_Framework_Assert
         $_GET = $_REQUEST = array();
         $_SERVER['HTTP_REFERER'] = '';
 
-        // Make sure translations are loaded to check messages in English
-        if ($this->loadTranslations) {
-            Translate::loadAllTranslations();
-            APILanguageManager::getInstance()->setLanguageForUser('superUserLogin', 'en');
-        }
-
         FakeAccess::$superUserLogin = 'superUserLogin';
 
         File::$invalidateOpCacheBeforeRead = true;
@@ -247,6 +246,7 @@ class Fixture extends \PHPUnit_Framework_Assert
 
         if ($this->createSuperUser) {
             self::createSuperUser($this->removeExistingSuperUser);
+            APILanguageManager::getInstance()->setLanguageForUser('superUserLogin', 'en');
         }
 
         SettingsPiwik::overwritePiwikUrl(self::getRootUrl() . 'tests/PHPUnit/proxy/');
@@ -387,6 +387,8 @@ class Fixture extends \PHPUnit_Framework_Assert
                 $pluginsManager->activatePlugin($name);
             }
         }
+
+        $pluginsManager->loadPluginTranslations();
     }
 
     public static function unloadAllPlugins()
