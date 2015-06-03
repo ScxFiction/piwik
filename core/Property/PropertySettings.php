@@ -8,6 +8,7 @@
  */
 namespace Piwik\Property;
 
+use Piwik\Db;
 use Piwik\Piwik;
 use Piwik\Plugin\Settings;
 use Piwik\Property\Settings\Storage;
@@ -37,7 +38,7 @@ class PropertySettings extends Settings
     {
         $this->idSite = $idSite;
         $this->idType = $idType;
-        $this->storage = new Storage($this->idSite);
+        $this->storage = new Storage(Db::get(), $this->idSite);
         $this->pluginName = 'PropertySettings';
 
         $this->init();

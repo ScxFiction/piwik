@@ -24,7 +24,7 @@ class Storage implements StorageInterface
      *
      * @var array
      */
-    private $settingsValues = array();
+    protected $settingsValues = array();
 
     // for lazy loading of setting values
     private $settingValuesLoaded = false;
