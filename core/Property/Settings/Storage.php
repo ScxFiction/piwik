@@ -7,7 +7,8 @@
  *
  */
 
-namespace Piwik\Type\TypeSettings;
+namespace Piwik\Property\Settings;
+
 use Piwik\Tracker\SettingsStorage;
 
 /**

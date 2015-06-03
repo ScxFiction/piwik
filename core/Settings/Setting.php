@@ -153,7 +153,7 @@ abstract class Setting
      * @var StorageInterface
      */
     private $storage;
-    private $pluginName;
+    protected $pluginName;
 
     /**
      * Constructor.

@@ -37,6 +37,7 @@
                         piwik.helper.modalConfirm(element, {yes: function() {
                             if (attrs.yes) {
                                 scope.$eval(attrs.yes);
+                                scope.$apply();
                             }
                         }});
                     }

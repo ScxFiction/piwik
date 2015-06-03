@@ -46,7 +46,7 @@
         };
 
         var initAvailableTypes = function () {
-            return piwikApi.fetch({method: 'SitesManager.getAvailableTypes'}).then(function (types) {
+            return piwikApi.fetch({method: 'API.getAvailableTypes'}).then(function (types) {
                 $scope.availableTypes = types;
                 $scope.typeForNewEntity = 'website';
 

@@ -8,14 +8,15 @@
  */
 namespace Piwik\Type;
 
-use Piwik\Container\StaticContainer;
 use Piwik\Plugin\Manager as PluginManager;
+use Piwik\Property\PropertySettings;
 
 class Type
 {
     const ID = '';
     protected $name = '';
     protected $description = '';
+    protected $howToSetupUrl = '';
 
     public function getId()
     {
@@ -39,7 +40,12 @@ class Type
         return $this->name;
     }
 
-    public function configureSettings(TypeSettings $settings)
+    public function getHowToSetupUrl()
+    {
+        return $this->howToSetupUrl;
+    }
+
+    public function configurePropertySettings(PropertySettings $settings)
     {
     }
 
@@ -48,12 +54,7 @@ class Type
      */
     public static function getAllTypes()
     {
-        $types = array();
-
-        $classes = PluginManager::getInstance()->findMultipleComponents('Types', '\\Piwik\\Type\\Type');
-        foreach ($classes as $classname) {
-            $types[] = StaticContainer::get($classname);
-        }
+        $types = PluginManager::getInstance()->findComponents('Type', '\\Piwik\\Type\\Type');
 
         return $types;
     }
@@ -64,6 +65,10 @@ class Type
      */
     public static function getType($typeId)
     {
+        if ($typeId === 'metasite') {
+            // TODO this is just a reminder for metastites plugin to define a type!
+        }
+
         foreach (self::getAllTypes() as $type) {
             if ($type->getId() === $typeId) {
                 return $type;

@@ -18,6 +18,7 @@ use Piwik\Metrics\Formatter;
 use Piwik\Network\IPUtils;
 use Piwik\Option;
 use Piwik\Piwik;
+use Piwik\Property\PropertySettings;
 use Piwik\ProxyHttp;
 use Piwik\Scheduler\Scheduler;
 use Piwik\SettingsPiwik;
@@ -26,7 +27,6 @@ use Piwik\Site;
 use Piwik\Tracker;
 use Piwik\Tracker\Cache;
 use Piwik\Type\Type;
-use Piwik\Type\TypeSettings;
 use Piwik\Url;
 use Piwik\UrlHelper;
 
@@ -576,8 +576,8 @@ class API extends \Piwik\Plugin\API
         Access::getInstance()->reloadAccess();
 
         if (!empty($settings)) {
-            $settings = json_decode($settings);
-            $this->updateCustomTypeSettings($idSite, $settings);
+            $settings = json_decode(Common::unsanitizeInputValue($settings), true);
+            $this->updatePropertySettings($idSite, $settings);
         }
 
         $this->postUpdateWebsite($idSite);
@@ -592,40 +592,26 @@ class API extends \Piwik\Plugin\API
         return (int) $idSite;
     }
 
-    public function getAvailableTypes()
-    {
-        $types = Type::getAllTypes();
-
-        $available = array();
-        foreach ($types as $type) {
-            $available[] = array(
-                'id' => $type->getId(),
-                'name' => Piwik::translate($type->getName()),
-                'description' => Piwik::translate($type->getDescription()),
-            );
-        }
-
-        return $available;
-    }
-
-    private function updateCustomTypeSettings($idSite, $settings)
+    private function updatePropertySettings($idSite, $settings)
     {
         if (empty($settings)) {
             return;
         }
 
-        $typeSettings = new TypeSettings($idSite);
+        $idType = Site::getTypeFor($idSite);
 
-        foreach ($typeSettings->getSettings() as $typeSetting) {
-            $name = $typeSetting->getName();
+        $propertySettings = new PropertySettings($idSite, $idType);
+
+        foreach ($propertySettings->getSettingsForCurrentUser() as $propertySetting) {
+            $name = $propertySetting->getName();
             if (!empty($settings[$name])) {
-                $typeSetting->setValue($settings[$name]);
+                $propertySetting->setValue($settings[$name]);
             }
-            // we do not clear existing settings if the value is missing. There can be so many settings added by
-            // random plugins one would always clear some settings.
+            // we do not clear existing settings if the value is missing.
+            // There can be so many settings added by random plugins one would always clear some settings.
         }
 
-        $typeSettings->save();
+        $propertySettings->save();
     }
 
     private function postUpdateWebsite($idSite)
@@ -1174,8 +1160,8 @@ class API extends \Piwik\Plugin\API
         }
 
         if (!empty($settings)) {
-            $settings = json_decode($settings);
-            $this->updateCustomTypeSettings($idSite, $settings);
+            $settings = json_decode(Common::unsanitizeInputValue($settings), true);
+            $this->updatePropertySettings($idSite, $settings);
         }
 
         $this->postUpdateWebsite($idSite);

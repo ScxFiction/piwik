@@ -27,6 +27,7 @@ use Piwik\Plugins\API\DataTable\MergeDataTables;
 use Piwik\Plugins\CoreAdminHome\CustomLogo;
 use Piwik\Segment\SegmentExpression;
 use Piwik\Translation\Translator;
+use Piwik\Type\Type;
 use Piwik\Version;
 
 require_once PIWIK_INCLUDE_PATH . '/core/Config.php';
@@ -92,6 +93,23 @@ class API extends \Piwik\Plugin\API
     public static function getDefaultMetricTranslations()
     {
         return Metrics::getDefaultMetricTranslations();
+    }
+
+    public function getAvailableTypes()
+    {
+        $types = Type::getAllTypes();
+
+        $available = array();
+        foreach ($types as $type) {
+            $available[] = array(
+                'id' => $type->getId(),
+                'name' => Piwik::translate($type->getName()),
+                'description' => Piwik::translate($type->getDescription()),
+                'howToSetupUrl' => $type->getHowToSetupUrl()
+            );
+        }
+
+        return $available;
     }
 
     public function getSegmentsMetadata($idSites = array(), $_hideImplementationData = true)

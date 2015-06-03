@@ -7,10 +7,9 @@
  *
  */
 
-namespace Piwik\Type;
+namespace Piwik\Property;
 
 use Piwik\Piwik;
-use Piwik\Settings\Setting;
 
 /**
  * Describes a Type setting for a website, mobile app, ...
@@ -19,7 +18,7 @@ use Piwik\Settings\Setting;
  *
  * @api
  */
-class TypeSetting extends Setting
+class PropertySetting extends \Piwik\Settings\Setting
 {
     /**
      * By default the value of the type setting is only readable by users having at least view access to one site

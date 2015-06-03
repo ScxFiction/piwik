@@ -77,13 +77,13 @@
                 }, 'GET');
             }
 
-            var settings = $('.typeSettings').serializeArray();
+            var settings = $('.typeSettings fieldset').serializeArray();
 
             var flatSettings = '';
             if (settings.length) {
                 flatSettings = {};
-                angular.forEach(settings, function (value, name) {
-                    flatSettings[name] = value;
+                angular.forEach(settings, function (setting) {
+                    flatSettings[setting.name] = setting.value;
                 });
                 flatSettings = JSON.stringify(flatSettings);
             }
@@ -98,6 +98,7 @@
                 excludedUserAgents: $scope.site.excluded_user_agents.join(','),
                 keepURLFragments: $scope.site.keep_url_fragment,
                 siteSearch: $scope.site.sitesearch,
+                type: $scope.site.type,
                 searchKeywordParameters: sendSiteSearchKeywordParams ? $scope.site.sitesearch_keyword_parameters.join(',') : null,
                 searchCategoryParameters: sendSearchCategoryParameters ? $scope.site.sitesearch_category_parameters.join(',') : null,
                 urls: $scope.site.alias_urls,

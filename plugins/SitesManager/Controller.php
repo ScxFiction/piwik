@@ -12,10 +12,11 @@ use Exception;
 use Piwik\API\ResponseBuilder;
 use Piwik\Common;
 use Piwik\Piwik;
+use Piwik\Property\PropertySetting;
+use Piwik\Property\PropertySettings;
 use Piwik\SettingsPiwik;
 use Piwik\Site;
 use Piwik\Tracker\TrackerCodeGenerator;
-use Piwik\Type\TypeSettings;
 use Piwik\Url;
 use Piwik\View;
 
@@ -49,14 +50,14 @@ class Controller extends \Piwik\Plugin\ControllerAdmin
 
         $view = new View('@SitesManager/custom_type_settings');
 
-        $settings = new TypeSettings($idSite, $idType ?: null);
-        $view->settings = $settings->getSettings();
+        $propSettings   = new PropertySettings($idSite, $idType);
+        $view->settings = $propSettings->getSettingsForCurrentUser();
 
         return $view->render();
     }
 
-    public function getGlobalSettings() {
-
+    public function getGlobalSettings()
+    {
         Piwik::checkUserHasSomeViewAccess();
 
         $response = new ResponseBuilder(Common::getRequestVar('format'));
