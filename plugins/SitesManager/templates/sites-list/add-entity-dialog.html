@@ -1,8 +1,8 @@
 <div piwik-dialog="showAddSiteDialog"
      yes="addSite(typeForNewEntity)"
-     title="New property">
+     title="{{ 'SitesManager_NewProperty'|translate }}">
 
-    What would you like to track?
+    {{ 'SitesManager_ChoosePropertyTypeHeadline'| translate }}
 
     <ul class="property-types">
         <li ng-repeat="type in availableTypes" title="{{ type.description }}">
@@ -11,5 +11,5 @@
         </li>
     </ul>
 
-    <input type="button" role="yes" value="Add new property">
+    <input type="button" role="yes" value="{{ 'SitesManager_AddProperty'|translate }}">
 </div>

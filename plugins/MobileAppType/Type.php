@@ -15,6 +15,7 @@ class Type extends \Piwik\Type\Type
 {
     const ID = 'mobileapp';
     protected $name = 'MobileAppType_MobileApp';
+    protected $namePlural = 'MobileAppType_MobileApps';
     protected $description = 'MobileAppType_MobileAppDescription';
     protected $howToSetupUrl = 'http://developer.piwik.org/api-reference/tracking-api'; // todo we need a dedicated page for that
 

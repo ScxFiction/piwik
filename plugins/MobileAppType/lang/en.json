@@ -1,6 +1,7 @@
 {
   "MobileAppType": {
     "MobileApp": "Mobile App",
+    "MobileApps": "Mobile Apps",
     "MobileAppDescription": "A native mobile app for eg iOS, Android, .."
   }
 }

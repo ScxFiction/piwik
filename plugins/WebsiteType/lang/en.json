@@ -1,6 +1,7 @@
 {
   "WebsiteType": {
     "Website": "Website",
+    "Websites": "Websites",
     "WebsiteDescription": "A website or a mobile web app that is usually consumed via a browser"
   }
 }

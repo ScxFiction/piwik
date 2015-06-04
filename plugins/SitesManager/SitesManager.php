@@ -326,7 +326,9 @@ class SitesManager extends \Piwik\Plugin
         $translationKeys[] = "SitesManager_SelectDefaultTimezone";
         $translationKeys[] = "SitesManager_DefaultCurrencyForNewWebsites";
         $translationKeys[] = "SitesManager_SelectDefaultCurrency";
-        $translationKeys[] = "SitesManager_AddSite";
+        $translationKeys[] = "SitesManager_AddProperty";
+        $translationKeys[] = "SitesManager_NewProperty";
+        $translationKeys[] = "SitesManager_XManagement";
         $translationKeys[] = "Goals_Ecommerce";
         $translationKeys[] = "SitesManager_NotFound";
     }

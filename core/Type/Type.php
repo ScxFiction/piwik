@@ -15,6 +15,7 @@ class Type
 {
     const ID = '';
     protected $name = '';
+    protected $namePlural = 'General_Properties';
     protected $description = '';
     protected $howToSetupUrl = '';
 
@@ -38,6 +39,11 @@ class Type
     public function getName()
     {
         return $this->name;
+    }
+
+    public function getNamePlural()
+    {
+        return $this->namePlural;
     }
 
     public function getHowToSetupUrl()

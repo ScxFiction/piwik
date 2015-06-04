@@ -59,7 +59,7 @@ class MultiSites extends \Piwik\Plugin
         $translations[] = 'General_AllWebsitesDashboard';
         $translations[] = 'General_NVisits';
         $translations[] = 'MultiSites_Evolution';
-        $translations[] = 'SitesManager_AddSite';
+        $translations[] = 'SitesManager_AddProperty';
         $translations[] = 'General_Next';
         $translations[] = 'General_Previous';
         $translations[] = 'General_GoTo';
