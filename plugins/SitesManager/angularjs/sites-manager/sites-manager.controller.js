@@ -256,7 +256,7 @@
 
         var lookupCurrentEditSite = function () {
 
-            var sitesInEditMode = $scope.sites.filter(function(site) {
+            var sitesInEditMode = $scope.adminSites.sites.filter(function(site) {
                 return site.editMode;
             });
 
