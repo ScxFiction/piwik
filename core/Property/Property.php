@@ -9,8 +9,7 @@
 
 namespace Piwik\Property;
 
-use Piwik\Cache;
-use Piwik\Piwik;
+use Exception;
 use Piwik\Site;
 
 /**
@@ -19,22 +18,15 @@ use Piwik\Site;
 class Property extends Site
 {
 
-    public function getSetting($name)
+    public function getSettingValue($name)
     {
-        $cache    = Cache::getTransientCache();
-        $cacheKey = 'PropertySettings_' . $this->id . 'login' . Piwik::getCurrentUserLogin();
-
-        if ($cache->contains($cacheKey)) {
-            $settings = $cache->fetch($cacheKey);
-        } else {
-            $settings = new PropertySettings($this->id, $this->getType());
-            $cache->save($cacheKey, $settings);
-        }
-
-        $setting = $settings->getSetting($name);
+        $settings = new PropertySettings($this->id, $this->getType());
+        $setting  = $settings->getSetting($name);
 
         if (!empty($setting)) {
             return $setting->getValue(); // Calling `getValue` makes sure we respect read permission property
         }
+
+        throw new Exception(sprintf('Setting %s does not exist', $name));
     }
 }

@@ -33,6 +33,17 @@ class Storage extends \Piwik\Settings\Storage
         $this->idSite = $idSite;
     }
 
+    /**
+     * This method makes no sense in terms of property settings. It is needed for plugin settings when uninstalling
+     * a particular plugin to delete all settings that were stored for that plugin. In property settings, settings
+     * are across plugin so we cannot simply remove all settings of a particular plugin.
+     * @ignore
+     */
+    public function deleteAllValues()
+    {
+        parent::deleteAllValues();
+    }
+
     public function deleteValue(Setting $setting)
     {
         $this->toBeDeleted[$setting->getName()] = true;
