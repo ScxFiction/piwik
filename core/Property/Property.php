@@ -9,20 +9,29 @@
 
 namespace Piwik\Property;
 
+use Piwik\Cache;
+use Piwik\Piwik;
+use Piwik\Site;
+
 /**
  * Provides access to individual properties.
- * @api
- * @since Piwik 3.0.0
  */
-class Property extends \Piwik\Site
+class Property extends Site
 {
 
     public function getSetting($name)
     {
-        // todo this could be slow as we always recreate settings for each getSetting call, we could just
-        // cache that instance similar to $infoSites.
-        $settings = new PropertySettings($this->id, $this->getType());
-        $setting  = $settings->getSetting($name);
+        $cache    = Cache::getTransientCache();
+        $cacheKey = 'PropertySettings_' . $this->id . 'login' . Piwik::getCurrentUserLogin();
+
+        if ($cache->contains($cacheKey)) {
+            $settings = $cache->fetch($cacheKey);
+        } else {
+            $settings = new PropertySettings($this->id, $this->getType());
+            $cache->save($cacheKey, $settings);
+        }
+
+        $setting = $settings->getSetting($name);
 
         if (!empty($setting)) {
             return $setting->getValue(); // Calling `getValue` makes sure we respect read permission property

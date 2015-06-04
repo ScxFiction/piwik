@@ -15,7 +15,7 @@ class Type extends \Piwik\Type\Type
     const ID = 'website';
     protected $name = 'WebsiteType_Website';
     protected $description = 'WebsiteType_WebsiteDescription';
-    protected $howToSetupUrl = 'module=CoreAdminHome&action=trackingCodeGenerator&updated=false';
+    protected $howToSetupUrl = '?module=CoreAdminHome&action=trackingCodeGenerator';
 
     public function configurePropertySettings(PropertySettings $settings)
     {

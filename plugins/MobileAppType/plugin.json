@@ -1,7 +1,7 @@
 {
   "name": "MobileAppType",
   "version": "0.1.0",
-  "description": "Piwik Platform showcase: how to create widgets, menus, scheduled tasks, a custom archiver, plugin tests, and a AngularJS component.",
+  "description": "Defines a new type Mobile App",
   "theme": false,
   "require": {
     "piwik": ">=2.14.0-b1"

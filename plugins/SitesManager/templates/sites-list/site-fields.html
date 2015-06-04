@@ -180,7 +180,7 @@
 </td>
 
 <td>
-    <a ng-show="site.idsite" href="?module=CoreAdminHome&action=trackingCodeGenerator&idSite={{ site.idsite }}&period={{ period }}&date={{ date }}&updated=false">
+    <a ng-show="site.idsite && setupUrls[site.type]" target="{{ setupUrls[site.type].isInternal ? '_self' : '_blank' }}" ng-href="{{ setupUrls[site.type].url }}{{ setupUrls[site.type].isInternal ? '&idSite=' + site.idsite + '&period=' + period + '&date=' + date +'&updated=false' : ''}}">
         {{ 'SitesManager_ShowTrackingTag'|translate }}
     </a>
 </td>

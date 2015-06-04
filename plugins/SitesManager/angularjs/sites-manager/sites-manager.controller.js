@@ -47,6 +47,16 @@
 
         var initAvailableTypes = function () {
             return piwikApi.fetch({method: 'API.getAvailableTypes'}).then(function (types) {
+
+                $scope.setupUrls = {};
+                angular.forEach(types, function (type) {
+                    var url = type.howToSetupUrl;
+                    if (url) {
+                        var isInternal = '?' === url.substr(0, 1);
+                        $scope.setupUrls[type.id] = {url: url, isInternal: isInternal};
+                    }
+                });
+
                 $scope.availableTypes = types;
                 $scope.typeForNewEntity = 'website';
 
